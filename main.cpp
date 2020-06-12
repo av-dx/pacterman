@@ -7,8 +7,10 @@
 #include <thread>
 #include <unistd.h>
 #include <termios.h>
+#include "Enums.h"
 #include "Vector2D.h"
 #include "Entity.h"
+#include "Map.h"
 
 // Globals
 
@@ -24,14 +26,8 @@ void Clear(void);
 void Update(void);
 void PollInput(void);
 
-// Structs
-
-struct Vector2D;
-
 // Classes
 
-class Entity;
-class Map;
 class Player;
 class Ghost;
 class Item;
@@ -39,31 +35,6 @@ class Dot;
 class Fruit;
 
 // Enumerables
-
-enum EnityState
-{
-    STATE_ACTIVE,
-    STATE_INACTIVE
-};
-
-enum Direction
-{
-    DIR_UP,
-    DIR_DOWN,
-    DIR_LEFT,
-    DIR_RIGHT
-};
-
-enum ObjectID
-{
-    ID_PLAYER,
-    ID_GHOST,
-    ID_WALL,
-    ID_FRUIT,
-    ID_DOT,
-    ID_BLANK,
-    ID_UNKNOWN
-};
 
 // Game Functions
 
@@ -74,74 +45,6 @@ void Init()
 void Loop()
 {
 }
-
-class Map
-{
-private:
-    std::vector<std::vector<char>> map;
-    int height, width;
-
-public:
-    bool fetchMap(const char *fname)
-    {
-        std::ifstream mapFile;
-        std::string inStr;
-        int i = 0;
-
-        mapFile.open(fname, std::ios_base::in);
-        if (!mapFile.is_open())
-            return 0;
-        mapFile >> width;
-        mapFile >> height;
-        while (!mapFile.eof())
-        {
-            std::getline(mapFile,inStr);
-            std::vector<char> inVecChar(inStr.begin(), inStr.end());
-            map.push_back(inVecChar);
-            i++;
-        }
-        
-        mapFile.close();
-        return 1;
-    }
-
-    ObjectID queryMap(Vector2D queryPos)
-    {
-        int qy = (int)queryPos.y;
-        int qx = (int)queryPos.x;
-
-        if (map[qy][qx] == '.')
-        {
-            // std::cout << qx << " , " << qy << "  [" << map[qy][qx] << "] "
-            //           << "ONDOT";
-            return ID_DOT;
-        }
-        if (map[qy][qx] == '|')
-            return ID_WALL;
-        if (map[qy][qx] == '-')
-            return ID_WALL;
-        if (map[qy][qx] == '8')
-            return ID_FRUIT;
-        if (map[qy][qx] == ' ')
-            return ID_BLANK;
-        return ID_UNKNOWN;
-    }
-
-    void setBlock(Vector2D pos, char i)
-    {
-        int px, py;
-        px = (int)pos.x;
-        py = (int)pos.y;
-        map[py][px] = i;
-    }
-
-    Vector2D getDimensions(void)
-    {
-        return Vector2D(width, height);
-    }
-
-    std::vector<std::vector<char>> getMap() { return map; }
-};
 
 class Player : public Entity
 {
