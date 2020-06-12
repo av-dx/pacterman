@@ -1,1 +1,4 @@
 .vscode/
+main.o
+pacman
+Vector2D.o

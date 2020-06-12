@@ -7,6 +7,7 @@
 #include <thread>
 #include <unistd.h>
 #include <termios.h>
+#include "Vector2D.h"
 
 // Globals
 
@@ -72,29 +73,6 @@ void Init()
 void Loop()
 {
 }
-
-struct Vector2D
-{
-    float x, y;
-    Vector2D()
-    {
-        x = 0;
-        y = 0;
-    }
-    Vector2D(float a, float b)
-    {
-        x = a;
-        y = b;
-    }
-    Vector2D operator+(Vector2D a)
-    {
-        return Vector2D(x + a.x, y + a.y);
-    }
-    Vector2D operator-(Vector2D a)
-    {
-        return Vector2D(x - a.x, y - a.y);
-    }
-};
 
 class Entity
 {
