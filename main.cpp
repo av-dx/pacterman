@@ -1,9 +1,6 @@
 #include <iostream>
-#include <fstream>
 #include <vector>
 #include <string>
-#include <bitset>
-#include <algorithm>
 #include <thread>
 #include <unistd.h>
 #include <termios.h>
