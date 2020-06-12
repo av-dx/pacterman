@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include "Vector2D.h"
+#include "Entity.h"
 
 // Globals
 
@@ -73,32 +74,6 @@ void Init()
 void Loop()
 {
 }
-
-class Entity
-{
-protected:
-    Vector2D pos;
-    std::bitset<8> state;
-    char image;
-
-public:
-    Vector2D getPos(void) { return pos; }
-    void setPos(Vector2D v) { pos = v; }
-    std::bitset<8> getState(void) { return state; }
-    void setState(std::bitset<8> s) { state = s; }
-    char getImage(void) { return image; }
-    void setImage(char i) { image = i; }
-    Entity()
-    {
-        pos = Vector2D(0, 0);
-        image = ' ';
-    }
-    Entity(Vector2D v, char i)
-    {
-        pos = v;
-        image = i;
-    }
-};
 
 class Map
 {
