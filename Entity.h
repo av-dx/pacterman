@@ -1,12 +1,11 @@
 #pragma once
-#include <bitset>
+
 #include "Vector2D.h"
 
 class Entity
 {
 protected:
     Vector2D pos;
-    std::bitset<8> state;
     char image;
 
 public:

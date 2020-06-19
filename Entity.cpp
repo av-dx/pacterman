@@ -1,4 +1,3 @@
-#include <bitset>
 #include "Vector2D.h"
 #include "Entity.h"
 
