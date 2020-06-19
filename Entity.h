@@ -12,8 +12,6 @@ protected:
 public:
     Vector2D getPos(void);
     void setPos(Vector2D v);
-    std::bitset<8> getState(void);
-    void setState(std::bitset<8> s);
     char getImage(void);
     void setImage(char i);
     Entity();

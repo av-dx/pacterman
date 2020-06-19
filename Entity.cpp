@@ -4,8 +4,6 @@
 
 Vector2D Entity::getPos(void) { return pos; }
 void Entity::setPos(Vector2D v) { pos = v; }
-std::bitset<8> Entity::getState(void) { return state; }
-void Entity::setState(std::bitset<8> s) { state = s; }
 char Entity::getImage(void) { return image; }
 void Entity::setImage(char i) { image = i; }
 Entity::Entity()
