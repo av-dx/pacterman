@@ -6,3 +6,5 @@ Entity.o
 Map.o
 Player.o
 statemachine.png
+Ghost.o
+GhostState.o
