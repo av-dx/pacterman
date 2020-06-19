@@ -1,7 +1,5 @@
 #pragma once
-#include "Enums.h"
-#include "Vector2D.h"
-#include "Entity.h"
+
 #include "Map.h"
 
 class Player : public Entity
