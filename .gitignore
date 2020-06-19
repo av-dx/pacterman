@@ -5,3 +5,4 @@ Vector2D.o
 Entity.o
 Map.o
 Player.o
+statemachine.png
