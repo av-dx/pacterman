@@ -24,7 +24,7 @@ Player::Player(Vector2D p)
     sprite[DIR_RIGHT][1] = '0';
     image = sprite[dir][animFrame];
 }
-void Player::update(Map *m)
+void Player::update(Map &m)
 {
     Vector2D dest;
     Vector2D step;
@@ -81,23 +81,23 @@ void Player::update(Map *m)
                 -In case ghost, ...
         */
 
-    currentBlock = m->queryMap(pos);
+    currentBlock = m.queryMap(pos);
     if (currentBlock == ID_DOT)
     {
         std::cout << "DOT___";
-        m->setBlock(pos, ' ');
+        m.setBlock(pos, ' ');
         score += 100;
     }
     else if (currentBlock == ID_FRUIT)
     {
         std::cout << "FRUIT_";
-        m->setBlock(pos, ' ');
+        m.setBlock(pos, ' ');
         score += 1000;
     }
     else if (currentBlock == ID_GHOST)
     {
         std::cout << "GHOST_";
-        m->setBlock(pos, ' ');
+        m.setBlock(pos, ' ');
         score += 500;
     }
     else
@@ -111,7 +111,7 @@ void Player::update(Map *m)
                 - Else move there, set collided flag to 0.    
         */
 
-    destBlock = m->queryMap(dest);
+    destBlock = m.queryMap(dest);
     if (destBlock == ID_WALL)
     {
         dest = pos;

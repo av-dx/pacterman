@@ -64,10 +64,10 @@ int main()
     while (true)
     {
         usleep(250000);
-        player.update(&map);
-        ghost.update(player, &map);
-        ghost1.update(player, &map);
-        ghost2.update(player, &map);
+        player.update(map);
+        ghost.update(player, map);
+        ghost1.update(player, map);
+        ghost2.update(player, map);
         board = map.getMap();
         board[player.getPos().y][player.getPos().x] = player.getImage();
         board[ghost.getPos().y][ghost.getPos().x] = ghost.getImage();

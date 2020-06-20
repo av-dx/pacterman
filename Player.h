@@ -14,6 +14,6 @@ private:
 
 public:
     Player(Vector2D p);
-    void update(Map *m);
+    void update(Map &m);
     int getScore();
 };
