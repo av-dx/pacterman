@@ -6,6 +6,13 @@ enum EnityState
     STATE_INACTIVE
 };
 
+enum GhostStateID
+{
+    HUNTING,
+    VULNERABLE,
+    RETREATING
+};
+
 enum Direction
 {
     DIR_UP,
