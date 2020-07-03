@@ -1,6 +1,6 @@
 .vscode/
 main.o
-pacman
+pacterman
 Vector2D.o
 Entity.o
 Map.o
