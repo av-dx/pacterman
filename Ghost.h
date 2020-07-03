@@ -1,6 +1,8 @@
 #pragma once
 
-#include "GhostState.h"
+class GhostState;
+class GhostHuntingState;
+class GhostRetreatingState;
 
 class Ghost : public Entity
 {
@@ -13,7 +15,9 @@ private:
 
 public:
     Ghost(Vector2D p);
-    void update(Player &p, Map *m);
+    void update(Player &p, Map &m);
     void setDir(Direction d);
+    GhostStateID getState();
+    void setState(GhostStateID);
     Direction getDir();
 };
