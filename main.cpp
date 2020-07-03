@@ -71,12 +71,15 @@ int main()
         board = map.getMap();
         board[player.getPos().y][player.getPos().x] = player.getImage();
         board[ghost.getPos().y][ghost.getPos().x] = ghost.getImage();
-        board[ghost1.getPos().y][ghost1.getPos().x] = ghost.getImage();
-        board[ghost2.getPos().y][ghost2.getPos().x] = ghost.getImage();
+        board[ghost1.getPos().y][ghost1.getPos().x] = ghost1.getImage();
+        board[ghost2.getPos().y][ghost2.getPos().x] = ghost2.getImage();
 
         system("clear");
-        std::cout << "  [" << map.getMap()[10][30] << "] ";
+        // std::cout << "  [" << map.getMap()[10][30] << "] ";
         std::cout << "SCORE : " << player.getScore() << std::endl;
+        std::cout << "G1:<" << ghost.getState()
+                  << "> -- G2:<" << ghost1.getState()
+                  << "> -- G3:<" << ghost2.getState() << ">" << std::endl;
 
         for (auto i : board)
         {
