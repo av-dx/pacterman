@@ -49,3 +49,37 @@ Direction Ghost::getDir()
 {
     return dir;
 }
+int Ghost::move(Map &m, Direction d)
+{
+    Vector2D dest, step;
+    ObjectID destBlock;
+
+    if (d == DIR_RIGHT)
+    {
+        step = Vector2D(speed, 0);
+    }
+    if (d == DIR_LEFT)
+    {
+        step = Vector2D(-speed, 0);
+    }
+    if (d == DIR_UP)
+    {
+        step = Vector2D(0, -speed);
+    }
+    if (d == DIR_DOWN)
+    {
+        step = Vector2D(0, speed);
+    }
+    dest = pos + step;
+    destBlock = m.queryMap(dest);
+
+    if (destBlock == ID_WALL)
+    {
+        return 0;
+    }
+    else
+    {
+        setPos(dest);
+    }
+    return 1;
+}
