@@ -8,3 +8,4 @@ Player.o
 statemachine.png
 Ghost.o
 GhostState.o
+SuperPellet.o

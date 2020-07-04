@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Map.h"
 #include "Ghost.h"
+#include "SuperPellet.h"
 
 // Globals
 
@@ -50,10 +51,15 @@ int main()
 {
     srand(time(0));
     Map map;
+
     Player player(Vector2D(29, 10));
+
     Ghost ghost(Vector2D(29, 8));
     Ghost ghost1(Vector2D(29, 7));
     Ghost ghost2(Vector2D(29, 6));
+
+    SuperPellet pellet(Vector2D(29,11));
+
     std::vector<std::vector<char>> board;
 
     map.fetchMap("default.map");
@@ -64,15 +70,29 @@ int main()
     while (true)
     {
         usleep(250000);
+
+        if (pellet.hit(player))
+        {
+            ghost.setState(VULNERABLE);
+            ghost1.setState(VULNERABLE);
+            ghost2.setState(VULNERABLE);
+        }
+
         player.update(map);
+
         ghost.update(player, map);
         ghost1.update(player, map);
         ghost2.update(player, map);
+
         board = map.getMap();
-        board[player.getPos().y][player.getPos().x] = player.getImage();
+
+        board[pellet.getPos().y][pellet.getPos().x] = pellet.getImage();
+
         board[ghost.getPos().y][ghost.getPos().x] = ghost.getImage();
         board[ghost1.getPos().y][ghost1.getPos().x] = ghost1.getImage();
         board[ghost2.getPos().y][ghost2.getPos().x] = ghost2.getImage();
+
+        board[player.getPos().y][player.getPos().x] = player.getImage();
 
         system("clear");
         // std::cout << "  [" << map.getMap()[10][30] << "] ";

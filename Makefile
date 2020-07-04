@@ -1,7 +1,7 @@
 .PHONY = pacterman all clean
 
-pacterman: main.o Vector2D.o Entity.o Map.o Player.o Ghost.o
-	g++ -std=c++11 -pthread main.o Vector2D.o Entity.o Map.o Player.o Ghost.o GhostState.o -o pacterman
+pacterman: main.o Vector2D.o Entity.o Map.o Player.o Ghost.o SuperPellet.o
+	g++ -std=c++11 -pthread main.o Vector2D.o Entity.o Map.o Player.o Ghost.o GhostState.o SuperPellet.o -o pacterman
 
 main.o: main.cpp
 	g++ -std=c++11 -pthread -c main.cpp
@@ -23,6 +23,9 @@ Ghost.o: Ghost.cpp GhostState.o
 
 GhostState.o: GhostState.cpp
 	g++ -c GhostState.cpp
+
+SuperPellet.o: SuperPellet.cpp
+	g++ -c SuperPellet.cpp
 
 all : pacterman Vector2D.o Entity.o main.o
 
