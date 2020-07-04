@@ -10,6 +10,7 @@ GhostStateID GhostHuntingState::stateID() { return HUNTING; }
 void GhostHuntingState::enter(Ghost &g)
 {
     g.setImage('W');
+    g.speed = 0.5f;
     // g.setDir(DIR_UP);
 }
 GhostState *GhostHuntingState::update(Ghost &g, Player &p, Map &m)
@@ -21,8 +22,13 @@ GhostState *GhostHuntingState::update(Ghost &g, Player &p, Map &m)
 
     if ((abs(distFromPlayerX) < 1) && (abs(distFromPlayerY) < 1))
     {
-        return new GhostRetreatingState();
+        // return new GhostRetreatingState();
     }
+    // if ((g.getPos().frac().x > 0.001) || (g.getPos().frac().y > 0.001))
+    // {
+    //     g.move(m, gDir);
+    //     return NULL;
+    // }
 
     if (abs(distFromPlayerX) > abs(distFromPlayerY))
     {
@@ -105,30 +111,14 @@ GhostState *GhostHuntingState::update(Ghost &g, Player &p, Map &m)
         for (int i = 0; i < 4; i++)
         {
             gDir = toTry[i];
-            g.setDir(gDir);
-            if (gDir == DIR_RIGHT)
+            if (g.move(m, gDir))
             {
-                step = Vector2D(1, 0);
-            }
-            if (gDir == DIR_LEFT)
-            {
-                step = Vector2D(-1, 0);
-            }
-            if (gDir == DIR_UP)
-            {
-                step = Vector2D(0, -1);
-            }
-            if (gDir == DIR_DOWN)
-            {
-                step = Vector2D(0, 1);
-            }
-            dest = g.getPos() + step;
-            destBlock = m.queryMap(dest);
-            if (destBlock != ID_WALL)
+                g.setDir(gDir);
                 break;
+            }
         }
     }
-    g.setPos(dest);
+    g.move(m, gDir);
     return NULL;
 }
 
@@ -136,6 +126,7 @@ GhostStateID GhostRetreatingState::stateID() { return RETREATING; }
 void GhostRetreatingState::enter(Ghost &g)
 {
     g.setImage('v');
+    g.speed = 1.0f;
     spawner = Vector2D(15, 6);
 }
 GhostState *GhostRetreatingState::update(Ghost &g, Player &p, Map &m)
@@ -172,25 +163,25 @@ GhostState *GhostRetreatingState::update(Ghost &g, Player &p, Map &m)
     if (gDir == DIR_RIGHT)
     {
         gbackDir = DIR_LEFT;
-        step = Vector2D(1, 0);
+        step = Vector2D(g.speed, 0);
         side = Vector2D(0, 1);
     }
     if (gDir == DIR_LEFT)
     {
         gbackDir = DIR_RIGHT;
-        step = Vector2D(-1, 0);
+        step = Vector2D(-g.speed, 0);
         side = Vector2D(0, 1);
     }
     if (gDir == DIR_UP)
     {
         gbackDir = DIR_DOWN;
-        step = Vector2D(0, -1);
+        step = Vector2D(0, -g.speed);
         side = Vector2D(1, 0);
     }
     if (gDir == DIR_DOWN)
     {
         gbackDir = DIR_UP;
-        step = Vector2D(0, 1);
+        step = Vector2D(0, g.speed);
         side = Vector2D(1, 0);
     }
     dest = g.getPos() + step;
@@ -234,19 +225,19 @@ GhostState *GhostRetreatingState::update(Ghost &g, Player &p, Map &m)
             g.setDir(gDir);
             if (gDir == DIR_RIGHT)
             {
-                step = Vector2D(1, 0);
+                step = Vector2D(g.speed, 0);
             }
             if (gDir == DIR_LEFT)
             {
-                step = Vector2D(-1, 0);
+                step = Vector2D(-g.speed, 0);
             }
             if (gDir == DIR_UP)
             {
-                step = Vector2D(0, -1);
+                step = Vector2D(0, -g.speed);
             }
             if (gDir == DIR_DOWN)
             {
-                step = Vector2D(0, 1);
+                step = Vector2D(0, g.speed);
             }
             dest = g.getPos() + step;
             destBlock = m.queryMap(dest);
@@ -262,6 +253,7 @@ GhostStateID GhostVulnerableState::stateID() { return VULNERABLE; }
 void GhostVulnerableState::enter(Ghost &g)
 {
     g.setImage('w');
+    g.speed = 0.5f;
     timer = 0;
 }
 GhostState *GhostVulnerableState::update(Ghost &g, Player &p, Map &m)
@@ -269,7 +261,7 @@ GhostState *GhostVulnerableState::update(Ghost &g, Player &p, Map &m)
     timer++;
     gDir = g.getDir();
 
-    if (timer > 20)
+    if (timer > 60)
     {
         return new GhostHuntingState();
     }
@@ -287,25 +279,25 @@ GhostState *GhostVulnerableState::update(Ghost &g, Player &p, Map &m)
     if (gDir == DIR_RIGHT)
     {
         gbackDir = DIR_LEFT;
-        step = Vector2D(1, 0);
+        step = Vector2D(g.speed, 0);
         side = Vector2D(0, 1);
     }
     if (gDir == DIR_LEFT)
     {
         gbackDir = DIR_RIGHT;
-        step = Vector2D(-1, 0);
+        step = Vector2D(g.speed, 0);
         side = Vector2D(0, 1);
     }
     if (gDir == DIR_UP)
     {
         gbackDir = DIR_DOWN;
-        step = Vector2D(0, -1);
+        step = Vector2D(0, -g.speed);
         side = Vector2D(1, 0);
     }
     if (gDir == DIR_DOWN)
     {
         gbackDir = DIR_UP;
-        step = Vector2D(0, 1);
+        step = Vector2D(0, g.speed);
         side = Vector2D(1, 0);
     }
     dest = g.getPos() + step;
@@ -331,19 +323,19 @@ GhostState *GhostVulnerableState::update(Ghost &g, Player &p, Map &m)
             g.setDir(gDir);
             if (gDir == DIR_RIGHT)
             {
-                step = Vector2D(1, 0);
+                step = Vector2D(g.speed, 0);
             }
             if (gDir == DIR_LEFT)
             {
-                step = Vector2D(-1, 0);
+                step = Vector2D(-g.speed, 0);
             }
             if (gDir == DIR_UP)
             {
-                step = Vector2D(0, -1);
+                step = Vector2D(0, -g.speed);
             }
             if (gDir == DIR_DOWN)
             {
-                step = Vector2D(0, 1);
+                step = Vector2D(0, g.speed);
             }
             dest = g.getPos() + step;
             destBlock = m.queryMap(dest);
