@@ -5,10 +5,10 @@ class Ghost;
 class GhostState
 {
 public:
-    virtual GhostStateID stateID() {}
+    virtual GhostStateID stateID() = 0;
     virtual ~GhostState() {}
     virtual void enter(Ghost &g) {}
-    virtual GhostState *update(Ghost &g, Player &p, Map &m) {}
+    virtual GhostState *update(Ghost &g, Player &p, Map &m) = 0;
 };
 
 class GhostHuntingState : public GhostState

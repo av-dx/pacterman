@@ -19,11 +19,19 @@ Vector2D Vector2D::operator-(Vector2D &a)
 {
     return Vector2D(x - a.x, y - a.y);
 }
-Vector2D Vector2D::absolute(Vector2D &a)
+Vector2D Vector2D::absolute(Vector2D a)
 {
     return Vector2D(abs(a.x), abs(a.y));
 }
-Vector2D Vector2D::frac()
+Vector2D Vector2D::frac(Vector2D a)
 {
-    return Vector2D(x - floor(x), y - floor(y));
+    return Vector2D(a.x - std::floor(a.x), a.y - std::floor(a.y));
+}
+Vector2D Vector2D::ceil(Vector2D a)
+{
+    return Vector2D(std::ceil(a.x), std::ceil(a.y));
+}
+Vector2D Vector2D::floor(Vector2D a)
+{
+    return Vector2D(std::floor(a.x), std::floor(a.y));
 }

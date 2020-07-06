@@ -7,6 +7,8 @@ struct Vector2D
     Vector2D(float a, float b);
     Vector2D operator+(Vector2D &a);
     Vector2D operator-(Vector2D &a);
-    Vector2D absolute(Vector2D &a);
-    Vector2D frac();
+    static Vector2D absolute(Vector2D a);
+    static Vector2D frac(Vector2D a);
+    static Vector2D floor(Vector2D a);
+    static Vector2D ceil(Vector2D a);
 };
