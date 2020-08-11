@@ -1,5 +1,6 @@
 #include <vector>
 #include <fstream>
+#include <iostream>
 #include "Enums.h"
 #include "Map.h"
 
@@ -8,12 +9,13 @@ bool Map::fetchMap(const char *fname)
     std::ifstream mapFile;
     std::string inStr;
     int i = 0;
-
+    char c;
     mapFile.open(fname, std::ios_base::in);
     if (!mapFile.is_open())
         return 0;
     mapFile >> width;
     mapFile >> height;
+    mapFile >> c;
     while (!mapFile.eof())
     {
         std::getline(mapFile, inStr);
@@ -31,21 +33,30 @@ ObjectID Map::queryMap(Vector2D queryPos)
     int qy = (int)queryPos.y;
     int qx = (int)queryPos.x;
 
-    if (map[qy][qx] == '.')
+    switch (map[qy][qx])
     {
-        // std::cout << qx << " , " << qy << "  [" << map[qy][qx] << "] "
-        //           << "ONDOT";
+    case '.':
         return ID_DOT;
-    }
-    if (map[qy][qx] == '|')
+        break;
+    case '-':
         return ID_WALL;
-    if (map[qy][qx] == '-')
+        break;
+    case '|':
         return ID_WALL;
-    if (map[qy][qx] == '8')
+        break;
+    case '_':
+        return ID_WALL;
+        break;
+    case '#':
+        return ID_WALL;
+        break;
+    case '8':
         return ID_FRUIT;
-    if (map[qy][qx] == ' ')
-        return ID_BLANK;
-    return ID_UNKNOWN;
+        break;
+    default:
+        return ID_UNKNOWN;
+        break;
+    }
 }
 
 void Map::setBlock(Vector2D pos, char i)
