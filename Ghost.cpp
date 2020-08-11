@@ -54,21 +54,10 @@ int Ghost::move(Map &m, Direction d)
     Vector2D dest, step;
     ObjectID destBlock;
 
-    if (d == DIR_RIGHT)
+    step = Vector2D::dirvec(d);
+    if ((d == DIR_UP) || (d == DIR_LEFT))
     {
-        step = Vector2D(speed, 0);
-    }
-    if (d == DIR_LEFT)
-    {
-        step = Vector2D(-speed, 0);
-    }
-    if (d == DIR_UP)
-    {
-        step = Vector2D(0, -speed);
-    }
-    if (d == DIR_DOWN)
-    {
-        step = Vector2D(0, speed);
+        step = Vector2D::product(step, speed);
     }
     dest = pos + step;
     destBlock = m.queryMap(dest);
@@ -79,6 +68,8 @@ int Ghost::move(Map &m, Direction d)
     }
     else
     {
+        step = Vector2D::product(Vector2D::dirvec(d), speed);
+        dest = pos + step;
         setPos(dest);
     }
     return 1;

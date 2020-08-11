@@ -51,26 +51,7 @@ void Player::update(Map &m)
         dir = DIR_RIGHT;
     }
 
-    if (dir == DIR_DOWN)
-    {
-        // std::cout << "down";
-        step = Vector2D(0, speed);
-        // std::cout << step.x << " : " << step.y;
-    }
-    else if (dir == DIR_UP)
-    {
-        step = Vector2D(0, -speed);
-    }
-    else if (dir == DIR_LEFT)
-    {
-        step = Vector2D(-speed, 0);
-    }
-    else if (dir == DIR_RIGHT)
-    {
-        step = Vector2D(speed, 0);
-    }
-    else
-        step = Vector2D(0, 0);
+    step = Vector2D::product(Vector2D::dirvec(dir), speed);
 
     dest = pos + step;
     // std::cout << speed << std::endl;

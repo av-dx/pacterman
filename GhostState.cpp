@@ -6,6 +6,11 @@
 #include "Ghost.h"
 #include "GhostState.h"
 
+Direction oppdir(Direction &d)
+{
+    return static_cast<Direction>(static_cast<int>(d) + 2);
+}
+
 GhostStateID GhostHuntingState::stateID() { return HUNTING; }
 void GhostHuntingState::enter(Ghost &g)
 {
@@ -24,11 +29,11 @@ GhostState *GhostHuntingState::update(Ghost &g, Player &p, Map &m)
     {
         // return new GhostRetreatingState();
     }
-    // if ((g.getPos().frac().x > 0.001) || (g.getPos().frac().y > 0.001))
-    // {
-    //     g.move(m, gDir);
-    //     return NULL;
-    // }
+    if ((Vector2D::frac(g.getPos()).x > 0.001) || (Vector2D::frac(g.getPos()).y > 0.001))
+    {
+        g.move(m, gDir);
+        return NULL;
+    }
 
     if (abs(distFromPlayerX) > abs(distFromPlayerY))
     {
@@ -49,30 +54,10 @@ GhostState *GhostHuntingState::update(Ghost &g, Player &p, Map &m)
         }
     }
 
-    if (gDir == DIR_RIGHT)
-    {
-        gbackDir = DIR_LEFT;
-        step = Vector2D(1, 0);
-        side = Vector2D(0, 1);
-    }
-    if (gDir == DIR_LEFT)
-    {
-        gbackDir = DIR_RIGHT;
-        step = Vector2D(-1, 0);
-        side = Vector2D(0, 1);
-    }
-    if (gDir == DIR_UP)
-    {
-        gbackDir = DIR_DOWN;
-        step = Vector2D(0, -1);
-        side = Vector2D(1, 0);
-    }
-    if (gDir == DIR_DOWN)
-    {
-        gbackDir = DIR_UP;
-        step = Vector2D(0, 1);
-        side = Vector2D(1, 0);
-    }
+    gbackDir = oppdir(gDir);
+    step = Vector2D::dirvec(gDir);
+    side = Vector2D(step.y, step.x);
+
     dest = g.getPos() + step;
     destBlock = m.queryMap(dest);
     side1Block = m.queryMap(g.getPos() + side);
@@ -160,30 +145,11 @@ GhostState *GhostRetreatingState::update(Ghost &g, Player &p, Map &m)
         }
     }
 
-    if (gDir == DIR_RIGHT)
-    {
-        gbackDir = DIR_LEFT;
-        step = Vector2D(g.speed, 0);
-        side = Vector2D(0, 1);
-    }
-    if (gDir == DIR_LEFT)
-    {
-        gbackDir = DIR_RIGHT;
-        step = Vector2D(-g.speed, 0);
-        side = Vector2D(0, 1);
-    }
-    if (gDir == DIR_UP)
-    {
-        gbackDir = DIR_DOWN;
-        step = Vector2D(0, -g.speed);
-        side = Vector2D(1, 0);
-    }
-    if (gDir == DIR_DOWN)
-    {
-        gbackDir = DIR_UP;
-        step = Vector2D(0, g.speed);
-        side = Vector2D(1, 0);
-    }
+    gbackDir = oppdir(gDir);
+    step = Vector2D::dirvec(gDir);
+    side = Vector2D(step.y, step.x);
+    step = Vector2D::product(step, g.speed);
+
     dest = g.getPos() + step;
     destBlock = m.queryMap(dest);
     side1Block = m.queryMap(g.getPos() + side);
@@ -276,30 +242,11 @@ GhostState *GhostVulnerableState::update(Ghost &g, Player &p, Map &m)
         }
     }
 
-    if (gDir == DIR_RIGHT)
-    {
-        gbackDir = DIR_LEFT;
-        step = Vector2D(g.speed, 0);
-        side = Vector2D(0, 1);
-    }
-    if (gDir == DIR_LEFT)
-    {
-        gbackDir = DIR_RIGHT;
-        step = Vector2D(g.speed, 0);
-        side = Vector2D(0, 1);
-    }
-    if (gDir == DIR_UP)
-    {
-        gbackDir = DIR_DOWN;
-        step = Vector2D(0, -g.speed);
-        side = Vector2D(1, 0);
-    }
-    if (gDir == DIR_DOWN)
-    {
-        gbackDir = DIR_UP;
-        step = Vector2D(0, g.speed);
-        side = Vector2D(1, 0);
-    }
+    gbackDir = oppdir(gDir);
+    step = Vector2D::dirvec(gDir);
+    side = Vector2D(step.y, step.x);
+    step = Vector2D::product(step, g.speed);
+
     dest = g.getPos() + step;
     destBlock = m.queryMap(dest);
     side1Block = m.queryMap(g.getPos() + side);
@@ -321,22 +268,7 @@ GhostState *GhostVulnerableState::update(Ghost &g, Player &p, Map &m)
         {
             gDir = toTry[i];
             g.setDir(gDir);
-            if (gDir == DIR_RIGHT)
-            {
-                step = Vector2D(g.speed, 0);
-            }
-            if (gDir == DIR_LEFT)
-            {
-                step = Vector2D(-g.speed, 0);
-            }
-            if (gDir == DIR_UP)
-            {
-                step = Vector2D(0, -g.speed);
-            }
-            if (gDir == DIR_DOWN)
-            {
-                step = Vector2D(0, g.speed);
-            }
+            step = Vector2D::product(Vector2D::dirvec(gDir), g.speed);
             dest = g.getPos() + step;
             destBlock = m.queryMap(dest);
             if (destBlock != ID_WALL)
