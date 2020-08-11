@@ -58,7 +58,7 @@ int main()
     Ghost ghost1(Vector2D(29, 7));
     Ghost ghost2(Vector2D(29, 6));
 
-    SuperPellet pellet(Vector2D(29,11));
+    SuperPellet pellet(Vector2D(29, 11));
 
     std::vector<std::vector<char>> board;
 
@@ -96,11 +96,14 @@ int main()
 
         system("clear");
         // std::cout << "  [" << map.getMap()[10][30] << "] ";
-        std::cout << "SCORE : " << player.getScore() << std::endl;
-        std::cout << "G1:<" << ghost.getState()
-                  << "> -- G2:<" << ghost1.getState()
-                  << "> -- G3:<" << ghost2.getState() << ">" << std::endl;
-
+        std::cout << "SCORE : " << player.getScore() << "<" << board[1][28] << ">" << std::endl;
+        // std::cout << "G1:<" << ghost.getState() << ghost.getPos().x <<
+        //           << "> -- G2:<" << ghost1.getState()
+        //           << "> -- G3:<" << ghost2.getState() << ">" << std::endl;
+        std::printf("G1:<%d,%.1f,%.1f,%d> -- G2:<%d,%.1f,%.1f,%d> -- G3:<%d,%.1f,%.1f,%d>\n",
+                    ghost.getState(), ghost.getPos().x, ghost.getPos().y, ghost.getDir(),
+                    ghost1.getState(), ghost1.getPos().x, ghost1.getPos().y, ghost1.getDir(),
+                    ghost2.getState(), ghost2.getPos().x, ghost2.getPos().y, ghost2.getDir());
         for (auto i : board)
         {
             for (auto j : i)
