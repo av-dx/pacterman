@@ -58,7 +58,7 @@ int main()
     Ghost ghost1(Vector2D(29, 7));
     Ghost ghost2(Vector2D(29, 6));
 
-    SuperPellet pellet(Vector2D(29, 11));
+    SuperPellet pellet(Vector2D(32, 10));
 
     std::vector<std::vector<char>> board;
 
@@ -107,7 +107,43 @@ int main()
         for (auto i : board)
         {
             for (auto j : i)
-                std::cout << j;
+                switch (j)
+                {
+                case '.':
+                    std::cout << "\033[1;33m" << j << "\033[0m";
+                    break;
+                case ' ':
+                    std::cout << j;
+                    break;
+                case '_':
+                case '|':
+                case '#':
+                    std::cout << "\033[37;47m" << j << "\033[0m";
+                    break;
+                case 'w':
+                    std::cout << "\033[1;34m" << j << "\033[0m";
+                    break;
+                case 'W':
+                    std::cout << "\033[1;31m" << j << "\033[0m";
+                    break;
+                case 'v':
+                    std::cout << "\033[1;32m" << j << "\033[0m";
+                    break;
+                case '0':
+                case '(':
+                case ')':
+                case 'u':
+                case 'n':
+                case 'o':
+                    std::cout << "\033[1;33m" << j << "\033[0m";
+                    break;
+                case '8':
+                    std::cout << "\033[1;36;43m" << j << "\033[0m";
+                    break;
+                default:
+                    std::cout << j;
+                    break;
+                }
             std::cout << "\n";
         }
         std::cout << std::endl;
