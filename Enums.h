@@ -16,8 +16,8 @@ enum GhostStateID
 enum Direction
 {
     DIR_UP,
-    DIR_DOWN,
     DIR_LEFT,
+    DIR_DOWN,
     DIR_RIGHT
 };
 
