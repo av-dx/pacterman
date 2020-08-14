@@ -27,13 +27,13 @@ GhostState *GhostHuntingState::update(Ghost &g, Player &p, Map &m)
 
     if ((abs(distFromPlayerX) < 1) && (abs(distFromPlayerY) < 1))
     {
-        // return new GhostRetreatingState();
+        p.kill();
     }
-    if ((Vector2D::frac(g.getPos()).x > 0.001) || (Vector2D::frac(g.getPos()).y > 0.001))
-    {
-        g.move(m, gDir);
-        return NULL;
-    }
+    // if ((Vector2D::frac(g.getPos()).x > 0.001) || (Vector2D::frac(g.getPos()).y > 0.001))
+    // {
+    //     g.move(m, gDir);
+    //     return NULL;
+    // }
 
     if (abs(distFromPlayerX) > abs(distFromPlayerY))
     {
