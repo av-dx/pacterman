@@ -14,6 +14,7 @@ Player::Player(Vector2D p)
     lives = 3;
     score = 0;
     speed = 0.5f;
+    active = 1;
     sprite[DIR_UP][0] = 'u';
     sprite[DIR_UP][1] = 'o';
     sprite[DIR_DOWN][0] = 'n';
@@ -111,4 +112,25 @@ void Player::update(Map &m)
 int Player::getScore()
 {
     return score;
+}
+
+int Player::getLives()
+{
+    return lives;
+}
+
+void Player::setLives(int l)
+{
+    lives = l;
+}
+
+void Player::kill()
+{
+    if (active)
+    {
+        lives -= 1;
+        std::cout << "\a\a\a";
+        image = 'X';
+        active = 0;
+    }
 }

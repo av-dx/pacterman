@@ -13,7 +13,11 @@ private:
     char sprite[4][2];
 
 public:
+    int active;
     Player(Vector2D p);
     void update(Map &m);
     int getScore();
+    int getLives();
+    void setLives(int l);
+    void kill();
 };
