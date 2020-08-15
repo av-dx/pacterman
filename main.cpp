@@ -17,11 +17,13 @@
 
 bool oldKeyDown[256];
 bool keyDown[256];
+bool gameRunning;
 
 // Functions
 
-void Loop(void);
+void Loop(Player &, Ghost &, Ghost &, Ghost &, Map &, std::vector<std::vector<char>>, SuperPellet &);
 void Init(void);
+void Intro(void);
 void Display(void);
 void Clear(void);
 void Update(void);
@@ -37,35 +39,69 @@ class Fruit;
 
 // Game Functions
 
-void Init()
+void Intro()
 {
 }
 
-void Loop()
+void Init()
 {
+    while (!keyDown[' '])
+    {
+        usleep(1000000);
+        system("clear");
+        std::cout << "\033[1;37m"
+                  << "____________________________________________________________\n"
+                  << "|                             ^                            |\n"
+                  << "|                                                          |\n"
+                  << "|< The terminal window should be big enough for this box. >|\n"
+                  << "|                                                          |\n"
+                  << "|    \aYou should be hearing your terminal bell right now.   |\n"
+                  << "|                                                          |\n"
+                  << "|   Your terminal theme might be different. This is how    |\n"
+                  << "|  colours will look on your terminal. Turn on 'Show bold  |\n"
+                  << "|  text in bright colors' check under Preferences->Colors. |\n"
+                  << "|      \033[1;31mRED              \033[1;32mGREEN              \033[1;33mYELLOW\033[1;37m          |\n"
+                  << "|      \033[1;34mBLUE             \033[1;35mMAGENTA            \033[1;36mCYAN\033[1;37m            |\n"
+                  << "|                                                          |\n"
+                  << "|               \033[4;37mPress [SPACE] to continue\033[24;37m                  |\n"
+                  << "|__________________________________________________________|\n"
+                  << "\033[0m" << std::endl;
+    }
 }
 
 // Main Function
 
 int main()
 {
+    gameRunning = true;
+    std::thread inputThread(PollInput);
+    Init();
+    Intro();
     srand(time(0));
     Map map;
-
     Player player(Vector2D(29, 10));
-
+    std::vector<std::vector<char>> board;
+    board = map.getMap();
+    map.fetchMap("default.map");
     Ghost ghost(Vector2D(29, 8));
     Ghost ghost1(Vector2D(29, 7));
     Ghost ghost2(Vector2D(29, 6));
+    SuperPellet pellet(Vector2D(50, 10));
 
-    SuperPellet pellet(Vector2D(32, 10));
+    while (player.getLives() > 0)
+    {
+        Loop(player, ghost, ghost1, ghost2, map, board, pellet);
+    }
+    gameRunning = false;
+    std::cout << "u lost now get lost, press any key to exit" << std::endl;
+    inputThread.join();
+    return 0;
+}
 
-    std::vector<std::vector<char>> board;
-
-    map.fetchMap("default.map");
-    board = map.getMap();
-
-    std::thread inputThread(PollInput);
+void Loop(Player &player, Ghost &ghost, Ghost &ghost1, Ghost &ghost2,
+          Map &map, std::vector<std::vector<char>> board, SuperPellet &pellet)
+{
+    int TIMER = 0;
 
     while (true)
     {
@@ -77,8 +113,20 @@ int main()
             ghost1.setState(VULNERABLE);
             ghost2.setState(VULNERABLE);
         }
-
-        player.update(map);
+        if (!player.active)
+        {
+            if (TIMER < 20)
+                TIMER++;
+            else
+            {
+                TIMER = 0;
+                player.active = 1;
+                player.setPos(Vector2D(29, 10));
+                return;
+            }
+        }
+        else
+            player.update(map);
 
         ghost.update(player, map);
         ghost1.update(player, map);
@@ -96,14 +144,14 @@ int main()
 
         system("clear");
         // std::cout << "  [" << map.getMap()[10][30] << "] ";
-        std::cout << "SCORE : " << player.getScore() << "<" << board[1][28] << ">" << std::endl;
+        std::cout << "\033[1;37m\tSCORE : " << player.getScore() << "\t\t\t LIVES : " << player.getLives() << "\033[0m" << std::endl;
         // std::cout << "G1:<" << ghost.getState() << ghost.getPos().x <<
         //           << "> -- G2:<" << ghost1.getState()
         //           << "> -- G3:<" << ghost2.getState() << ">" << std::endl;
-        std::printf("G1:<%d,%.1f,%.1f,%d> -- G2:<%d,%.1f,%.1f,%d> -- G3:<%d,%.1f,%.1f,%d>\n",
-                    ghost.getState(), ghost.getPos().x, ghost.getPos().y, ghost.getDir(),
-                    ghost1.getState(), ghost1.getPos().x, ghost1.getPos().y, ghost1.getDir(),
-                    ghost2.getState(), ghost2.getPos().x, ghost2.getPos().y, ghost2.getDir());
+        // std::printf("G1:<%d,%.1f,%.1f,%d> -- G2:<%d,%.1f,%.1f,%d> -- G3:<%d,%.1f,%.1f,%d>\n",
+        //             ghost.getState(), ghost.getPos().x, ghost.getPos().y, ghost.getDir(),
+        //             ghost1.getState(), ghost1.getPos().x, ghost1.getPos().y, ghost1.getDir(),
+        //             ghost2.getState(), ghost2.getPos().x, ghost2.getPos().y, ghost2.getDir());
         for (auto i : board)
         {
             for (auto j : i)
@@ -165,9 +213,8 @@ void PollInput()
     new_tio.c_lflag &= ~ECHO;
     tcsetattr(STDIN_FILENO, TCSANOW, &new_tio);
     char newchar, oldchar;
-    while (true)
+    while (gameRunning)
     {
-
         std::cin.get(newchar);
         if (oldchar != newchar)
         {
@@ -176,4 +223,5 @@ void PollInput()
             oldchar = newchar;
         }
     }
+    return;
 }
