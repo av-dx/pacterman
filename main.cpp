@@ -201,7 +201,7 @@ void Loop(Player &player, Ghost &ghost, Ghost &ghost1, Ghost &ghost2,
         // }
     }
 
-    return 0;
+    return;
 }
 
 void PollInput()
