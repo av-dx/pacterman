@@ -41,6 +41,89 @@ class Fruit;
 
 void Intro()
 {
+    std::string canvas[12];
+    int x1 = 7, x2 = 28, x3 = 5, x4 = 10, x5 = 30;
+    char x = 90;
+    for (auto &s : canvas)
+        s = "";
+    canvas[3] = "			  \aa game by";
+    canvas[7] = "			    \a";
+
+    system("clear");
+    for (int i = 0; i < 12; i++)
+    {
+        usleep(700000);
+        std::cout << canvas[i];
+        if (i == 7)
+            std::cout << (char)(x + x1) << (char)(x + x2)
+                      << (char)(x + x3) << (char)(x + x4) << (char)(x + x5);
+        std::cout << '\n';
+    }
+    usleep(500000);
+
+    for (auto &s : canvas)
+        s = "";
+
+    canvas[4] = "		       \aa vacation project ";
+    canvas[5] = "		       \aspecially made for";
+    canvas[9] = "		       \a[FRIEND NAME HERE]";
+
+    system("clear");
+    for (int i = 0; i < 12; i++)
+    {
+        usleep(700000);
+        std::cout << canvas[i] << '\n';
+    }
+    usleep(500000);
+
+    for (auto &s : canvas)
+        s = "";
+
+    canvas[3] = "	    \amade in a span of 68 hrs";
+    canvas[4] = "				 \a across 2 months";
+    canvas[8] = "			 \ahere it is";
+    canvas[9] = "			     \a.";
+    canvas[10] = "			     \a.";
+    canvas[11] = "			     \a.";
+
+    system("clear");
+    for (int i = 0; i < 12; i++)
+    {
+        usleep(700000);
+        std::cout << canvas[i] << '\n';
+    }
+    usleep(500000);
+
+    for (auto &s : canvas)
+        s = "";
+
+    canvas[2] = "     \a ____  __   ___ ____ ____ ____ __  __   __   _  _ ";
+    canvas[3] = "     \a|  _ \\/__\\ / __(_  _( ___(  _ (  \\/  ) /__\\ ( \\( )";
+    canvas[4] = "     \a| ___/(__)( (__  )(  )__) )   /)    ( /(__)\\|    | ";
+    canvas[5] = "     \a|__)(__)(__\\___)(__)(____(_)\\_(_/\\/\\_(__)(__(_)\\_)";
+    canvas[9] = "		              \ayes...";
+    canvas[10] = "	      \ait's pacman in a terminal,";
+    canvas[11] = "			\ahow original";
+    system("clear");
+    for (int i = 0; i < 12; i++)
+    {
+        usleep(700000);
+        std::cout << canvas[i] << '\n';
+    }
+    usleep(2000000);
+
+    for (auto &s : canvas)
+        s = "";
+
+    canvas[11] = "                          \a fuck";
+
+    system("clear");
+    for (int i = 0; i < 12; i++)
+    {
+        usleep(400000);
+        std::cout << canvas[i] << '\n';
+    }
+    usleep(2000000);
 }
 
 void Init()

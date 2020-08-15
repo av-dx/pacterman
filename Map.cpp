@@ -6,26 +6,39 @@
 
 bool Map::fetchMap(const char *fname)
 {
-    std::ifstream mapFile;
+    //std::ifstream mapFile;
     std::string inStr;
-    int i = 0;
     char c;
-    mapFile.open(fname, std::ios_base::in);
-    if (!mapFile.is_open())
-        return 0;
-    mapFile >> width;
-    mapFile >> height;
-    mapFile >> c;
-    while (!mapFile.eof())
+    //mapFile.open(fname, std::ios_base::in);
+    //if (!mapFile.is_open())
+    //return 0;
+    //mapFile >> width;
+    //mapFile >> height;
+    width = 56;
+    height = 12;
+    //mapFile >> c;
+    std::string bg[12] = {"________________________________________________________",
+                          "|....88888.........888888.......############...........|",
+                          "|.#############.#############.#......#######.#########.|",
+                          "|.#############.#############.######.#######.#########.|",
+                          "|.#############.#############.#............#.#########8|",
+                          "|..............+..............############.#.#########8|",
+                          "|.#############.#############.#............#.#########8|",
+                          "|.#############.#############.#.############.#########8|",
+                          "|.#############.#############.#............#.#########.|",
+                          "|.#############.#############.############.#.#########.|",
+                          "|....88888..........88888..............................|",
+                          "|______________________________________________________|"};
+
+    for (int i = 0; i < 12; i++)
     {
-        std::getline(mapFile, inStr);
+        inStr = bg[i];
         std::vector<char> inVecChar(inStr.begin(), inStr.end());
         map.push_back(inVecChar);
-        i++;
     }
 
-    mapFile.close();
-    return 1;
+    //mapFile.close();
+    return 0;
 }
 
 ObjectID Map::queryMap(Vector2D queryPos)
