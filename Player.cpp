@@ -66,25 +66,25 @@ void Player::update(Map &m)
     currentBlock = m.queryMap(pos);
     if (currentBlock == ID_DOT)
     {
-        std::cout << "DOT___";
+        // std::cout << "DOT___";
         m.setBlock(pos, ' ');
         score += 100;
     }
     else if (currentBlock == ID_FRUIT)
     {
-        std::cout << "FRUIT_";
+        // std::cout << "FRUIT_";
         m.setBlock(pos, ' ');
         score += 1000;
     }
     else if (currentBlock == ID_GHOST)
     {
-        std::cout << "GHOST_";
+        // std::cout << "GHOST_";
         m.setBlock(pos, ' ');
         score += 500;
     }
     else
     {
-        std::cout << "UNK___";
+        // std::cout << "UNK___";
     }
 
     /*
