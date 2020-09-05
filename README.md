@@ -8,8 +8,7 @@ This is a clone of Pac-Man that runs in the terminal.
 OS : Linux
 
 # Building
-`
-git clone https://github.com/av-dx/pacterman.git
-cd pacterman
-make all
-`
+
+`git clone https://github.com/av-dx/pacterman.git`
+`cd pacterman`
+`make all`
