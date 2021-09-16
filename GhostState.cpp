@@ -104,7 +104,7 @@ GhostState *GhostHuntingState::update(Ghost &g, Player &p, Map &m)
         }
     }
     g.move(m, gDir);
-    return NULL;
+    return nullptr;
 }
 
 GhostStateID GhostRetreatingState::stateID() { return RETREATING; }
@@ -212,7 +212,7 @@ GhostState *GhostRetreatingState::update(Ghost &g, Player &p, Map &m)
         }
     }
     g.setPos(dest);
-    return NULL;
+    return nullptr;
 }
 
 GhostStateID GhostVulnerableState::stateID() { return VULNERABLE; }
@@ -276,5 +276,5 @@ GhostState *GhostVulnerableState::update(Ghost &g, Player &p, Map &m)
         }
     }
     g.setPos(dest);
-    return NULL;
+    return nullptr;
 }
