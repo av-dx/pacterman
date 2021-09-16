@@ -34,7 +34,7 @@ GhostStateID Ghost::getState() { return state->stateID(); }
 void Ghost::update(Player &p, Map &m)
 {
     GhostState *next_state = state->update(*this, p, m);
-    if (next_state != NULL)
+    if (next_state != nullptr)
     {
         delete state;
         state = next_state;
